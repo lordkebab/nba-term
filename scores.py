@@ -1,5 +1,6 @@
 from __future__ import print_function
 from datetime import date, timedelta
+from scorebox import Scorebox
 
 import json
 import urllib2
@@ -17,26 +18,14 @@ def get_scores(dt):
     games = list()
 
     for g in datadict['games']:
-        d = {
-            'vTeam': {
-                'triCode': str(g['vTeam']['triCode']),
-                'score': str(g['vTeam']['score'])
-            },
-            'hTeam': {
-                'triCode': str(g['hTeam']['triCode']),
-                'score': str(g['hTeam']['score'])
-            },
-            'nugget': str(g['nugget']['text'])
-        }
+        vTeam = str(g['vTeam']['triCode'])
+        vScore = str(g['vTeam']['score'])
+        hTeam = str(g['hTeam']['triCode'])
+        hScore = str(g['hTeam']['score'])
+        nugget = str(g['nugget']['text'])
 
-        games.append(d)
-
-    gamesdict = {
-        'numGames': num_games,
-        'games': games
-    }
-
-    print(json.dumps(gamesdict, indent=4, sort_keys=True))
+        box = Scorebox(vTeam, vScore, hTeam, hScore, nugget)
+        print(box.scorebox)
 
 if __name__ == '__main__':
 
