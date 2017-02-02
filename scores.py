@@ -24,7 +24,6 @@ def get_scores(dt):
         nuggets.append(len(str(g['nugget']['text']).strip()))
 
     totalwidth = max(nuggets)
-    print(totalwidth)
 
     for g in datadict['games']:
         vTeam = str(g['vTeam']['triCode'])
