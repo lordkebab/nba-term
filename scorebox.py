@@ -26,8 +26,11 @@ class Scorebox(object):
         else:
             self.totalwidth = len(self.nugget)
 
+        # highlight the winner
+
+
         top = u'\u2554' + u'\u2550' * self.totalwidth + u'\u2557' + '\n'
-        matchup = u'\u2551' + (self.vTeam + '@' + self.hTeam).rjust((self.totalwidth+7)/2) + u'\u2551'.rjust((self.totalwidth-3)/2) + '\n'
+        matchup = u'\u2551' + (self.vTeam + '@' + self.hTeam).rjust((self.totalwidth+7)/2) + u'\u2551'.rjust(self.totalwidth-((self.totalwidth+7)/2)+1) + '\n'
         visitor = u'\u2551' + self.vTeam + self.vScore.rjust(self.totalwidth - 3) + u'\u2551' + '\n'
         home = u'\u2551' + self.hTeam + self.hScore.rjust(self.totalwidth - 3) + u'\u2551' + '\n'
         divider = u'\u255f' + u'\u2500' * self.totalwidth + u'\u2562' + '\n'
