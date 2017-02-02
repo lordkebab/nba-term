@@ -17,14 +17,23 @@ def get_scores(dt):
     num_games = str(datadict['numGames'])
     games = list()
 
+    # all boxes should be the same size, represented by the length
+    # of the longest game nugget
+    nuggets = list()
+    for g in datadict['games']:
+        nuggets.append(len(str(g['nugget']['text']).strip()))
+
+    totalwidth = max(nuggets)
+    print(totalwidth)
+
     for g in datadict['games']:
         vTeam = str(g['vTeam']['triCode'])
         vScore = str(g['vTeam']['score'])
         hTeam = str(g['hTeam']['triCode'])
         hScore = str(g['hTeam']['score'])
-        nugget = str(g['nugget']['text'])
+        nugget = str(g['nugget']['text']).strip()
 
-        box = Scorebox(vTeam, vScore, hTeam, hScore, nugget)
+        box = Scorebox(vTeam, vScore, hTeam, hScore, nugget, totalwidth)
         print(box.scorebox)
 
 if __name__ == '__main__':
