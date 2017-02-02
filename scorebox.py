@@ -11,7 +11,7 @@ class Scorebox(object):
             hTeam (str): Home team's triCode
             hScore (str): Home team's score
             nugget (str): Game nugget
-            totalwidth(int): Width of the box scores
+            totalwidth(str): Width of the box scores
         """
 
         self.vTeam = vTeam
@@ -36,7 +36,7 @@ class Scorebox(object):
         visitor = u'\u2551' + self.vTeam + self.vScore.rjust(self.totalwidth - 3) + u'\u2551' + '\n'
         home = u'\u2551' + self.hTeam + self.hScore.rjust(self.totalwidth - 3) + u'\u2551' + '\n'
         divider = u'\u255f' + u'\u2500' * self.totalwidth + u'\u2562' + '\n'
-        nugget = u'\u2551' + self.nugget + u'\u2551'.rjust(rjust) + '\n'
         bottom = u'\u255a' + u'\u2550' * self.totalwidth + u'\u255d' + '\n'
+        nugget = u'\u2551' + self.nugget + u'\u2551'.rjust(rjust) + '\n'
 
         self.scorebox = top + matchup + visitor + home + divider + nugget + bottom
