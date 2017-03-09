@@ -19,6 +19,9 @@ def get_scores(dt):
     datadict = json.loads(data)
 
     num_games = str(datadict['numGames'])
+    if num_games == '0':
+        return "No games played on this date."
+
     games = list()
 
     # all boxes should be the same size, represented by the length
