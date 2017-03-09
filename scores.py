@@ -10,7 +10,11 @@ import sys
 def get_scores(dt):
     url = 'http://data.nba.net/data/10s/prod/v1/' + dt + '/scoreboard.json'
 
-    res = urllib2.urlopen(url)
+    try:
+        res = urllib2.urlopen(url)
+    except urllib2.HTTPError:
+        return "No games played on this date."
+
     data = res.read()
     datadict = json.loads(data)
 
@@ -24,6 +28,7 @@ def get_scores(dt):
         nuggets.append(len(str(g['nugget']['text']).strip()))
 
     totalwidth = max(nuggets)
+    boxes = list()
 
     for g in datadict['games']:
         vTeam = str(g['vTeam']['triCode'])
@@ -33,7 +38,9 @@ def get_scores(dt):
         nugget = str(g['nugget']['text']).strip()
 
         box = Scorebox(vTeam, vScore, hTeam, hScore, nugget, totalwidth)
-        print(box.scorebox)
+        boxes.append(box.scorebox)
+
+    return boxes
 
 if __name__ == '__main__':
 
@@ -41,13 +48,12 @@ if __name__ == '__main__':
         # the default is last night's games
         dt = re.sub('-','',str(date.today() - timedelta(1)))
     else:
-        # user supplied an argument, see if it's valid YYYYMMDD
         dt = sys.argv[1]
-        try:
-            # this is not very good but it'll do for now
-            # TODO: meh, make this a little better
-            date(dt)
-        except:
-            print(dt + " is not in YYYYMMDD format or is not a valid date.")
 
-    gamesdict = get_scores(dt)
+    scores = get_scores(dt)
+
+    if isinstance(scores, list):
+        for game in scores:
+            print(game)
+    else:
+        print(scores)
