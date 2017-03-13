@@ -2,7 +2,7 @@ from __future__ import print_function
 from datetime import date, timedelta
 
 import json
-import requests
+import urllib2
 import re
 import sys
 
@@ -52,9 +52,13 @@ class Scorebox(object):
 def get_scores(dt):
     url = 'http://data.nba.net/data/10s/prod/v1/' + dt + '/scoreboard.json'
 
-    res = requests.get(url)
+    try:
+        res = urllib2.urlopen(url)
+    except urllib2.HTTPError:
+        return "No games played on this date."
 
-    datadict = res.json()
+    data = res.read()
+    datadict = json.loads(data)
 
     num_games = str(datadict['numGames'])
     if num_games == '0':
